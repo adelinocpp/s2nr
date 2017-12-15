@@ -42,7 +42,13 @@ param.OFFSET = OFFSET;
 param.NFFT = NFFT;
 param.NOVERLAP = NOVERLAP;
 
-[Y,FS] = wavread(filename);
+% [Y,F] = wavread(filename);
+% Compatible with Matlab R2016 (9.1)
+if (exist('wavread','builtin') == 5)
+    [Y, FS] = wavread(filename);
+else
+    [Y, FS] = audioread(filename);
+end,
 
 param.TotalTime = (length(Y) - 1)/FS ;
 param.FS = FS;
