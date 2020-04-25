@@ -42,7 +42,12 @@ param.OFFSET = OFFSET;
 param.NFFT = NFFT;
 param.NOVERLAP = NOVERLAP;
 
-[Y,FS] = wavread(filename);
+if (exist('wavread','builtin') == 5)
+    [Y, FS] = wavread(filename);
+else
+    [Y, FS] = audioread(filename);
+end,
+
 
 param.TotalTime = (length(Y) - 1)/FS ;
 param.FS = FS;
